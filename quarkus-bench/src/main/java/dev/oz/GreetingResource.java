@@ -1,4 +1,4 @@
-package dev.oz.getting.started;
+package dev.oz;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

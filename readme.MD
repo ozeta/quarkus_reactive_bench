@@ -10,6 +10,6 @@ sh initialize.sh
 
 # Repository structure
 ```
-/quarkus-bench
-/gatling
+/quarkus-bench #the sources of the quarkus service
+/gatling-bench #the sources and bin for gatling
 ```
