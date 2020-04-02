@@ -4,7 +4,12 @@ the scope of this repository is to develop a POC of a reactive service using Qua
 
 # Initialize the project
 
-```
+``` bash
 sh initialize.sh
 ```
 
+# Repository structure
+```
+/quarkus-bench
+/gatling
+```
