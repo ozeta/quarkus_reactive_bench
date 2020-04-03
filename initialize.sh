@@ -1,19 +1,25 @@
 #!/bin/bash
 set -euo pipefail
 
+GATLING_BUNDLE="gatling-charts-highcharts-bundle-3.3.1"
+REPO_URL="https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/3.3.1"
+MD5="2a75f07457a7d505e450a3f5f36e65a0"
+
 initialize_gatling() {
   echo "[INFO] installing gatling from maven repo"
-  curl -sO https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/3.3.1/gatling-charts-highcharts-bundle-3.3.1-bundle.zip
-  unzip -q gatling-charts-highcharts-bundle-3.3.1-bundle.zip
-  rm gatling-charts-highcharts-bundle-3.3.1-bundle.zip
-  rsync -aq gatling-charts-highcharts-bundle-3.3.1 gatling-bench
-  rm gatling-charts-highcharts-bundle-3.3.1-bundle
+  [[ ! -f "${GATLING_BUNDLE}-bundle.zip" ]] && curl -O "${REPO_URL}/${GATLING_BUNDLE}-bundle.zip" && unzip -q ${GATLING_BUNDLE}-bundle.zip
+  #[[ "$MD5" ==  ]]
+  mkdir -p ${GATLING_BUNDLE}-3.3.1/user-files/simulations/quarkus-bench/  
+  mv gatling-bench/user-files/simulations/quarkus-bench/quarkus-simulation.scala ${GATLING_BUNDLE}/user-files/simulations/quarkus-bench/quarkus-simulation.scala
+  rm -rf gatling-bench
+  mv ${GATLING_BUNDLE} gatling-bench
+  rm ${GATLING_BUNDLE}-3.3.1-bundle.zip
 }
 
 initialize_env_vars() {
   echo "[INFO] reading env var from $1"
   set -a
-  export "$(cat $1 | xargs)"
+  . $1
   set +a
 }
 
