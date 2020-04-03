@@ -11,6 +11,7 @@ services:
       PGDATA: /data/postgres
     volumes:
        - postgres:/data/postgres
+       - quarkus-bench/db/populate_test_user.pgsql:/docker-entrypoint-initdb.d/1-populate_test_user.sql
     ports:
       - "5432:5432"
     networks:
