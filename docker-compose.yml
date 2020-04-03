@@ -1,27 +1,32 @@
 ---
-version: '3.7'
+version: "3.7"
 
 services:
   postgres:
-    container_name: postgres
-    image: postgres
+    image: docker.io/postgres:9.6.17
+    # env_file:
+    #   - ./env/local.env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: /data/postgres
+      - POSTGRES_USER=quarkusdemo
+      - POSTGRES_PASSWORD=quarkusdemopass
+      - PGDATA=/data/postgres
     volumes:
-       - postgres:/data/postgres
-       - quarkus-bench/db/populate_test_user.pgsql:/docker-entrypoint-initdb.d/1-populate_test_user.sql
+      - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
       - postgres
-    restart: unless-stopped
+    deploy:
+      replicas: 1
+      restart_policy:
+        delay: 5s
+        max_attempts: 3
+        window: 30s
+        condition: on-failure
 
 networks:
   postgres:
     # driver: bridge
 
 volumes:
-    postgres:
-    pgadmin:
+  postgres:
