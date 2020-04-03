@@ -7,8 +7,8 @@ services:
     # env_file:
     #   - ./env/local.env
     environment:
-      - POSTGRES_USER=quarkusdemo
-      - POSTGRES_PASSWORD=quarkusdemopass
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/data/postgres
     volumes:
       - postgres:/data/postgres
@@ -20,7 +20,7 @@ services:
       replicas: 1
       restart_policy:
         delay: 5s
-        max_attempts: 3
+        max_attempts: 1
         window: 30s
         condition: on-failure
 
