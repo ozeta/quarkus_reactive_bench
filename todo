@@ -1,3 +1,0 @@
-    set -o allexport
-    source ${CONFDIR}/init.env
-    set +o allexport

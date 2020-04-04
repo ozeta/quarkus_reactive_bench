@@ -4,6 +4,7 @@ the scope of this repository is to develop a POC of a reactive service using Qua
 
 # Initialize the project
 
+downloads gatling and move tests inside folder.
 ``` bash
 sh initialize.sh
 ```

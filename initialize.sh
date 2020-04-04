@@ -19,4 +19,4 @@ initialize_gatling() {
 
 [[ ! -d gatling-bench/bin ]] && initialize_gatling
 
-echo "Postgres user:${POSTGRES_USER}"
+echo "[INFO] gatling downloaded."

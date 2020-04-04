@@ -3,15 +3,13 @@ version: "3.7"
 
 services:
   postgres:
-    image: docker.io/postgres:9.6.17
-    # env_file:
-    #   - ./env/local.env
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - PGDATA=/data/postgres
+    image: docker.io/postgres:12.2-alpine
+    env_file:
+      - ./env/local.env
+    # environment:
     volumes:
       - postgres:/data/postgres
+      - ./quarkus-bench/db/populate_test_user.pgsql:/docker-entrypoint-initdb.d/0_init.sql
     ports:
       - "5432:5432"
     networks:
