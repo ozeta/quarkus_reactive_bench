@@ -2,6 +2,37 @@
 version: "3.7"
 
 services:
+  quarkus-bench:
+    image: docker.io/quarkus/quarkus-bench-jvm:latest
+    ports:
+      - "9090:9090"
+    environment:
+     - NODE_ENV=production
+     - POSTGRES_HOST=postgres
+    env_file:
+      - ./env/local.env    
+    networks:
+      - quarkus-net
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://127.0.0.1:9090/health/ready"]
+    #   interval: 1m30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 20s
+    deploy:
+      replicas: 1
+      restart_policy:
+        delay: 5s
+        max_attempts: 1
+        window: 30s
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 500M
+        reservations:
+          cpus: "0.50"
+          memory: 500M
   postgres:
     image: docker.io/postgres:12.2-alpine
     env_file:
@@ -13,7 +44,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - quarkus-net
     deploy:
       replicas: 1
       restart_policy:
@@ -21,9 +52,15 @@ services:
         max_attempts: 1
         window: 30s
         condition: on-failure
-
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 1G
+        reservations:
+          cpus: "0.50"
+          memory: 1G
 networks:
-  postgres:
+  quarkus-net:
     # driver: bridge
 
 volumes:
